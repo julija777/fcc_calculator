@@ -1,48 +1,84 @@
-#calculator {
-    
-    width: 300px;
-    height: 400px;
-    margin: 0 auto;
-    background-color: #4b0082;
-    border-radius: 10px;
-    padding: 20px;
-  }
-  
-  #display {
-    display: grid;
-    place-items: center;
-    width: 100%;
-    height: 50px;
-    background-color: #fff0f5;
-    border-radius: 10px;
-    font-size: 2em;
-    text-align: right;
-    padding: 10px;
-    box-sizing: border-box;
-    color: #4b0082;
-  }
-  
-  button {
-    display: -moz-grid-group;
-    margin: 5px;
-    width: 25%;
-    height: 60px;
-    font-size: 1.5em;
-    margin: 5px;
-    border: none;
-    border-radius: 10px;
-    background-color: #ff69b4;
-    color: #fff;
-    box-shadow: 2px 2px 10px #4b0082;
-  }
-  
-  #clear {
-    width: 50%;
-    background-color: #ffd700;
-  }
-  
-  #equals {
-    background-color: #00ff00;
-    color: #fff;
-  }
-  
+.calculator {
+  margin-top: 100px;
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: #ff69b4;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(101, 196, 225, 0.1);
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 20px;
+}
+
+.exp {
+  color: #c1e9f4;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.io {
+  background-color: #8eed8e;
+  border-radius: 5px;
+  font-size: 40px;
+  padding: 5px;
+  text-align: right;
+}
+
+.ac button {
+  background-color: #3828e7;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 18px;
+  padding: 10px;
+  width: 100%;
+}
+
+.ac button:hover {
+  background-color: #d32f2f;
+}
+
+.d button,
+.m button,
+.s button,
+.a button,
+.eq button,
+.n0 button,
+.n1 button,
+.n2 button,
+.n3 button,
+.n4 button,
+.n5 button,
+.n6 button,
+.n7 button,
+.n8 button,
+.n9 button,
+.dec button {
+  background-color: #4b0082;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 18px;
+  padding: 10px;
+  width: 100%;
+}
+
+.d button:hover,
+.m button:hover,
+.s button:hover,
+.a button:hover,
+.eq button:hover,
+.n0 button:hover,
+.n1 button:hover,
+.n2 button:hover,
+.n3 button:hover,
+.n4 button:hover,
+.n5 button:hover,
+.n6 button:hover,
+.n7 button:hover,
+.n8 button:hover,
+.n9 button:hover,
+.dec button:hover {
+  background-color: #388e3c;
+}

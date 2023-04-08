@@ -1,122 +1,182 @@
-import React, { useState } from 'react';
-import './Calculator.css';
+import React, { useState } from "react";
+import "./Calculator.css";
+
 
 export default function Calculator() {
-  // Initialize state variables
-  const [input, setInput] = useState("");
-  const [operator, setOperator] = useState("");
-  const [firstValue, setFirstValue] = useState("");
-  const [result, setResult] = useState("");
-  const [decimalAdded, setDecimalAdded] = useState(false);
-  const [lastClicked, setLastClicked] = useState("");
+  const operators = ["*", "/", "+", "-"];
+  const [exp, setExp] = useState("");
+  const [io, setIO] = useState("0");
+  const [solved, setSolved] = useState(false);
 
-  // Event handlers for button clicks
-  function handleNumberClick(event) {
-    const value = event.target.textContent;
-    if (input === "0" && value === "0") {
-      return;
-    }
-    if (lastClicked === "operator") {
-      setInput(value);
-    } else {
-      setInput(input + value);
-    }
-    setLastClicked("number");
+  return (
+      <div class="calculator">
+          <div class="exp">{exp}</div>
+          <div id="display" class="io">
+              {io} 
+          </div>
+          <div class="ac">
+              <button id="clear" onClick={clear}>
+                  AC
+              </button>
+          </div>
+          <div class="d">
+              <button id="divide" onClick={() => op("/")}>
+                  /
+              </button>
+          </div>
+          <div class="m">
+              <button id="multiply" onClick={() => op("*")}>
+                  X
+              </button>
+          </div>
+          <div class="n7">
+              <button id="seven" onClick={() => n("7")}>
+                  7
+              </button>
+          </div>
+          <div class="n8">
+              <button id="eight" onClick={() => n("8")}>
+                  8
+              </button>
+          </div>
+          <div class="n9">
+              <button id="nine" onClick={() => n("9")}>
+                  9
+              </button>
+          </div>
+          <div class="s">
+              <button id="subtract" onClick={() => op("-")}>
+                  -
+              </button>
+          </div>
+          <div class="n4">
+              <button id="four" onClick={() => n("4")}>
+                  4
+              </button>
+          </div>
+          <div class="n5">
+              <button id="five" onClick={() => n("5")}>
+                  5
+              </button>
+          </div>
+          <div class="n6">
+              <button id="six" onClick={() => n("6")}>
+                  6
+              </button>
+          </div>
+          <div class="a">
+              <button id="add" onClick={() => op("+")}>
+                  +
+              </button>
+          </div>
+          <div class="n1">
+              <button id="one" onClick={() => n("1")}>
+                  1
+              </button>
+          </div>
+          <div class="n2">
+              <button id="two" onClick={() => n("2")}>
+                  2
+              </button>
+          </div>
+          <div class="n3">
+              <button id="three" onClick={() => n("3")}>
+                  3
+              </button>
+          </div>
+          <div class="eq">
+              <button id="equals" onClick={solve}>
+                  =
+              </button>
+          </div>
+          <div class="n0">
+              <button id="zero" onClick={() => n("0")}>
+                  0
+              </button>
+          </div>
+          <div class="dec">
+              <button id="decimal" onClick={() => n(".")}>
+                  .
+              </button>
+          </div>
+      </div>
+  );
+
+  function clear() {
+      setExp("");
+      setIO("0");
   }
 
-  function handleDecimalClick() {
-    if (!decimalAdded) {
-      if (lastClicked === "operator") {
-        setInput("0.");
-      } else {
-        setInput(input + ".");
+  function op(toDo) {
+      // working copy
+      let wcExp = exp;
+
+      if (solved) {
+          wcExp = io;
+          setSolved(false);
       }
-      setDecimalAdded(true);
-    }
-    setLastClicked("decimal");
-  }
 
-  function handleOperatorClick(event) {
-    if (lastClicked === "operator") {
-      setOperator(event.target.textContent);
-      return;
-    }
-    if (lastClicked === "result") {
-      setFirstValue(result);
-      setInput("");
-    } else {
-      setFirstValue(input);
-      setInput("");
-    }
-    setOperator(event.target.textContent);
-    setDecimalAdded(false);
-    setLastClicked("operator");
-  }
-
-  function handleClearClick() {
-    setInput("");
-    setOperator("");
-    setFirstValue("");
-    setResult("");
-    setDecimalAdded(false);
-    setLastClicked("");
-  }
-
-      function handleEqualClick() {
-        if (lastClicked === "operator") {
+      if (toDo !== "-") {
+          wcExp = wcExp.replace(/[*\/+-]+$/, "");
+      } else if (toDo === "-" && wcExp.endsWith("-")) {
           return;
-        }
-        if (firstValue === "") {
-          setResult(input);
-        } else {
-          const secondValue = input;
-          switch (operator) {
-            case "+":
-              setResult(parseFloat(firstValue) + parseFloat(secondValue));
-              break;
-            case "-":
-              setResult(parseFloat(firstValue) - parseFloat(secondValue));
-              break;
-            case "*":
-              setResult(parseFloat(firstValue) * parseFloat(secondValue));
-              break;
-            case "/":
-              setResult(parseFloat(firstValue) / parseFloat(secondValue));
-              break;
-            default:
-              setResult(secondValue);
-          }
-        }
-        if(result.toString().length > 15){
-          setInput(Number.parseFloat(result).toExponential(6));
-        }else{
-          setInput(result.toString());
-        }
-        setLastClicked("result");
       }
-    
-      return (
-        <div id="calculator">
-          <div id="display">{input}</div>
-          <button id="clear" onClick={handleClearClick}>C</button>
-          <button id="divide" onClick={handleOperatorClick}>/</button>
-          <button id="multiply" onClick={handleOperatorClick}>*</button>
-          <button id="subtract" onClick={handleOperatorClick}>-</button>
-          <button id="add" onClick={handleOperatorClick}>+</button>
-          <button id="equals" onClick={handleEqualClick}>=</button>
-          <button id="decimal" onClick={handleDecimalClick}>.</button>
-          <button id="zero" onClick={handleNumberClick}>0</button>
-          <button id="one" onClick={handleNumberClick}>1</button>
-          <button id="two" onClick={handleNumberClick}>2</button>
-          <button id="three" onClick={handleNumberClick}>3</button>
-          <button id="four" onClick={handleNumberClick}>4</button>
-          <button id="five" onClick={handleNumberClick}>5</button>
-          <button id="six" onClick={handleNumberClick}>6</button>
-          <button id="seven" onClick={handleNumberClick}>7</button>
-          <button id="eight" onClick={handleNumberClick}>8</button>
-          <button id="nine" onClick={handleNumberClick}>9</button>
-        </div>
-      );
-    }
 
+      setExp(wcExp + toDo);
+      setIO(toDo);
+  }
 
+  function n(digit) {
+      // working copy
+      let wcExp = exp;
+      let wcIO = io;
+
+      if (digit === "0" && wcExp === "0") {
+          return;
+      }
+
+      if (solved) {
+          wcExp = "";
+          wcIO = "";
+          setSolved(false);
+      }
+
+      if (operators.includes(io)) {
+          wcIO = "";
+      }
+
+      if (wcIO === "0") {
+          wcIO = "";
+      }
+
+      if (digit === ".") {
+          if (wcIO.includes(".")) {
+              return;
+          }
+
+          if (wcIO === "") {
+              wcIO = "0";
+          }
+
+          if (wcExp === "" || /[*\/+-]$/.test(wcExp)) {
+              wcExp += "0";
+          }
+      }
+
+      setExp(wcExp + digit);
+      setIO(wcIO + digit);
+  }
+
+  function solve() {
+      // working copy
+      let wcExp = exp;
+
+      wcExp = wcExp.replace(/[*\/+-]+$/, "");
+
+      const answer = eval(wcExp).toString();
+
+      setExp(wcExp + "=" + answer);
+      setIO(answer);
+      setSolved(true);
+  }
+}
